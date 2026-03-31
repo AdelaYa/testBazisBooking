@@ -127,12 +127,12 @@ final class BookingsRepository {
     }
 
     public function findById($id, $lock = false) {
-        $sql = <<<SQL
-SELECT id, table_id, guest_name, guest_phone, booking_date, start_time, end_time, guests_count, status, created_at
-FROM bookings
-WHERE id = :id
-LIMIT 1
-SQL;
+        $sql = "
+            SELECT id, table_id, guest_name, guest_phone, booking_date, start_time, end_time, guests_count, status, created_at
+            FROM bookings
+            WHERE id = :id
+            LIMIT 1
+        ";
         if ($lock) {
             $sql .= ' FOR UPDATE';
         }

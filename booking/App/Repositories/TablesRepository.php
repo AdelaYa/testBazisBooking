@@ -39,21 +39,21 @@ final class TablesRepository {
             $params['guests_count'] = $guestsCount;
         }
 
-        $sql = <<<SQL
-SELECT t.id, t.table_number, t.capacity
-FROM tables t
-WHERE t.is_active = 1
-{$capacityFilter}
-AND t.id NOT IN (
-    SELECT b.table_id
-    FROM bookings b
-    WHERE b.booking_date = :booking_date
-      AND b.status = 'confirmed'
-      AND b.start_time < :end_time
-      AND b.end_time > :start_time
-)
-ORDER BY t.table_number ASC
-SQL;
+        $sql = "
+            SELECT t.id, t.table_number, t.capacity
+            FROM tables t
+            WHERE t.is_active = 1
+            {$capacityFilter}
+            AND t.id NOT IN (
+                SELECT b.table_id
+                FROM bookings b
+                WHERE b.booking_date = :booking_date
+                  AND b.status = 'confirmed'
+                  AND b.start_time < :end_time
+                  AND b.end_time > :start_time
+            )
+            ORDER BY t.table_number ASC
+        ";
 
         $statement = $this->pdo->prepare($sql);
         $statement->execute($params);
