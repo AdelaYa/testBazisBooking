@@ -1,0 +1,100 @@
+{
+  "info": {
+    "_postman_id": "9e6d9f2f-1a5d-4b19-9c49-1b7e7a0f0001",
+    "name": "Table Booking API",
+    "description": "REST API for table bookings(PHP and MySQL)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get Available Tables",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/tables/available?date=2026-04-01&start_time=18:00&end_time=20:00&guests_count=4",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "tables", "available"],
+          "query": [
+            { "key": "date", "value": "2026-04-01" },
+            { "key": "start_time", "value": "18:00" },
+            { "key": "end_time", "value": "20:00" },
+            { "key": "guests_count", "value": "4" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create Booking",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"table_id\": 2,\n  \"guest_name\": \"Ivan Petrov\",\n  \"guest_phone\": \"+79990000000\",\n  \"booking_date\": \"2026-04-01\",\n  \"start_time\": \"18:00\",\n  \"end_time\": \"20:00\",\n  \"guests_count\": 4\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/bookings",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "bookings"]
+        }
+      }
+    },
+    {
+      "name": "List Bookings",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/bookings?date=2026-04-01&status=confirmed&page=1&limit=10",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "bookings"],
+          "query": [
+            { "key": "date", "value": "2026-04-01" },
+            { "key": "status", "value": "confirmed" },
+            { "key": "page", "value": "1" },
+            { "key": "limit", "value": "10" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Update Booking",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"table_id\": 3,\n  \"guest_name\": \"Ivan Petrov\",\n  \"guest_phone\": \"+79990000000\",\n  \"booking_date\": \"2026-04-01\",\n  \"start_time\": \"19:00\",\n  \"end_time\": \"21:00\",\n  \"guests_count\": 4\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/bookings/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "bookings", "1"]
+        }
+      }
+    },
+    {
+      "name": "Cancel Booking",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/bookings/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "bookings", "1"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8000"
+    }
+  ]
+}
