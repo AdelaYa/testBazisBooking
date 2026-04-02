@@ -13,7 +13,7 @@ final class TablesRepository {
         $this->pdo = Connection::pdo();
     }
 
-    public function findById($id, $lock = false): ?array {
+    public function findById(int $id, bool $lock = false): ?array {
         $sql = 'SELECT id, table_number, capacity, is_active FROM tables WHERE id = :id LIMIT 1';
         if ($lock) {
             $sql .= ' FOR UPDATE';
@@ -26,7 +26,7 @@ final class TablesRepository {
         return $table ?: null;
     }
 
-    public function findAvailableByDateTime($date, $startTime, $endTime, $guestsCount = null): array {
+    public function findAvailableByDateTime(string $date, string $startTime, string $endTime, ?int $guestsCount = null): array {
         $params = [
             'booking_date' => $date,
             'start_time'   => $startTime,
@@ -61,7 +61,7 @@ final class TablesRepository {
         return $statement->fetchAll();
     }
 
-    public function lockById($id): ?array {
+    public function lockById(int $id): ?array {
         $statement = $this->pdo->prepare('SELECT id, table_number, capacity, is_active FROM tables WHERE id = :id LIMIT 1 FOR UPDATE');
         $statement->execute(['id' => $id]);
         $table = $statement->fetch();

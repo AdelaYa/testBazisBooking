@@ -40,7 +40,7 @@ final class Request {
         return $this->path;
     }
 
-    public function query($key, $default = null) {
+    public function query(string $key, mixed $default = null): mixed {
         return $this->query[$key] ?? $default;
     }
 

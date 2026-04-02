@@ -51,7 +51,7 @@ final class BookingsRepository {
     /**
      * @throws Throwable
      */
-    public function updateBooking($id, array $data): array {
+    public function updateBooking(int $id, array $data): array {
         try {
             $this->pdo->beginTransaction();
 
@@ -110,7 +110,7 @@ final class BookingsRepository {
         }
     }
 
-    public function getBooking($id): array {
+    public function getBooking(int $id): array {
         $existing = $this->findById($id);
         if ($existing === null) {
             throw new HttpException('Booking not found.', 404);
@@ -118,7 +118,7 @@ final class BookingsRepository {
         return $existing;
     }
 
-    public function cancelBooking($id): void {
+    public function cancelBooking(int $id): void {
         $existing = $this->findById($id);
         if ($existing === null) {
             throw new HttpException('Booking not found.', 404);
@@ -126,7 +126,7 @@ final class BookingsRepository {
         $this->cancel($id);
     }
 
-    public function findById($id, $lock = false) {
+    public function findById(int $id, bool $lock = false): ?array {
         $sql = "
             SELECT id, table_id, guest_name, guest_phone, booking_date, start_time, end_time, guests_count, status, created_at
             FROM bookings
@@ -246,7 +246,7 @@ final class BookingsRepository {
         return $statement->rowCount() > 0;
     }
 
-    public function cancel($id): bool {
+    public function cancel(int $id): bool {
         $statement = $this->pdo->prepare(
             "UPDATE bookings SET status = 'cancelled' WHERE id = :id AND status <> 'cancelled'"
         );

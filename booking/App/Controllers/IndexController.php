@@ -7,7 +7,7 @@ use App\Http\Response;
 
 class IndexController {
 
-    public function index(Request $request) {
+    public function index(Request $request): void {
         Response::json([
             'name' => 'Table Booking REST API',
             'status' => 'ok',

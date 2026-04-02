@@ -6,9 +6,9 @@ use PDO;
 use PDOException;
 
 final class Connection {
-    private static $instance = null;
+    private static ?PDO $instance = null;
 
-    public static function pdo() {
+    public static function pdo(): PDO {
         if (self::$instance instanceof PDO) {
             return self::$instance;
         }
