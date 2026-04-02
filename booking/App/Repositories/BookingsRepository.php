@@ -255,7 +255,7 @@ final class BookingsRepository {
         return $statement->rowCount() > 0;
     }
 
-    public function hasConflict($tableId, $date, $startTime, $endTime, $excludeBookingId = null): bool {
+    public function hasConflict(int $tableId, string $date, string $startTime, string $endTime, ?int $excludeBookingId = null): bool {
         $sql = "
             SELECT COUNT(*)
             FROM bookings
@@ -284,7 +284,7 @@ final class BookingsRepository {
         return $statement->fetchColumn() > 0;
     }
 
-    private function isTableIsAvailable($tableId, $date, $startTime, $endTime, $excludeBookingId = null): void {
+    private function isTableIsAvailable(int $tableId, string $date, string $startTime, string $endTime, ?int $excludeBookingId = null): void {
         if ($this->hasConflict($tableId, $date, $startTime, $endTime, $excludeBookingId)) {
             throw new HttpException('The table is already booked for the selected time.', 409);
         }
